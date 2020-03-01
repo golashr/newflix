@@ -1,0 +1,108 @@
+version: '3'
+services:
+  mongo:
+    hostname: mongo
+    image: 'mvertes/alpine-mongo:latest'
+    volumes:
+      - ./mongodb:/data/db
+    ports:
+      - '27017:27017'
+    restart: always
+    networks:
+      webjet_net:
+        ipv4_address: 172.22.240.17
+  webjetserver:
+    hostname: webjetserver
+    image: 'golra03/webjetserver:latest'
+    ports:
+      - '3001:3001'
+    volumes:
+      - './logs:/logs'
+    entrypoint:
+      - /bin/sh
+      - '-c'
+      - >-
+        set -u
+        set -e
+        mkdir -p /logs/webjetserver
+
+        DATE=`date '+%Y-%m-%d_%H-%M-%S'`
+
+        cd /gosmartchain/smartcertwebapp/university
+
+        npm start  
+          2>/logs/webjetserver/$${DATE}_log.txt
+    restart: always
+    networks:
+      webjet_net:
+        ipv4_address: 172.22.240.11
+  cinemaworld:
+    hostname: cinemaworld
+    image: 'golra03/cinemaworld:latest'
+    ports:
+      - '3002:3002'
+    volumes:
+      - './logs:/logs'
+    depends_on:
+      - mongo
+    entrypoint:
+      - /bin/sh
+      - '-c'
+      - >-
+        set -u
+        set -e
+        mkdir -p /logs/cinemaworld
+
+        DATE=`date '+%Y-%m-%d_%H-%M-%S'`
+
+        cd /webjet/cinemaworld
+
+        npm start  
+         2>/logs/cinemaworld/adminlogs.txt
+    restart: always
+    networks:
+      webjet_net:
+        ipv4_address: 172.22.240.12
+  filmworld:
+    hostname: filmworld
+    image: 'golra03/filmworld:latest'
+    ports:
+      - '3003:3003'
+    volumes:
+      - './logs:/logs'
+    depends_on:
+      - mongo
+    entrypoint:
+      - /bin/sh
+      - '-c'
+      - >-
+        set -u
+        set -e
+        mkdir -p /logs/filmworld
+
+        DATE=`date '+%Y-%m-%d_%H-%M-%S'`
+
+        cd /webjet/filmworld
+
+        npm start
+         2>/logs/filmworld/$${DATE}_log.txt
+    restart: always
+    networks:
+      webjet_net:
+        ipv4_address: 172.22.240.13
+  webjets:
+    hostname: webjets
+    image: 'golra03/webjets:latest'
+    ports:
+      - '3000:80'
+    volumes:
+      - './logs:/logs'
+    depends_on:
+      - blockexplorerserver
+    restart: always
+    networks:
+      webjet_net:
+        ipv4_address: 172.19.240.10
+networks:
+  webjet_net:
+    external: true
