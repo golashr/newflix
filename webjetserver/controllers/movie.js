@@ -1,6 +1,6 @@
 // const { successResponse, errorResponse } = require('../utils/utils');
 const logger = require('../logger/logger');
-const { axios, CancelToken } = require('axios');
+const axios = require('axios');
 const config = require('../config/config');
 
 /** @description Retrieve the login token from the given service.
@@ -11,18 +11,12 @@ const config = require('../config/config');
 exports.getLoginToken = url => {
   logger.info(`[+] Login token to retrieve from ${url}`);
   return new Promise(function(resolve, reject) {
-    let source = CancelToken.source();
-    setTimeout(() => {
-      source.cancel();
-    }, 300);
-    axios
-      .get(url, {
+    axios.get(url, {
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*'
         },
-        timeout: 2000,
-        cancelToken: source.token
+        timeout: 2000
       })
       .then(response => {
         logger.info('[+] The login token retrieved from the given service.');
@@ -47,12 +41,7 @@ exports.getMovieRemoteWithToken = (url, token, ID) => {
   logger.info(`[+] Movie ID ${ID} to look from ${url}`);
   const authToken = `${config.AUTH_TOKEN}${token}`;
   return new Promise(function(resolve, reject) {
-    let source = CancelToken.source();
-    setTimeout(() => {
-      source.cancel();
-    }, 300);
-    axios
-      .get(url, {
+    axios.get(url, {
         headers: {
           Authorization: authToken,
           'Content-Type': 'application/json',
@@ -61,8 +50,7 @@ exports.getMovieRemoteWithToken = (url, token, ID) => {
         params: {
           ID
         },
-        timeout: 2000,
-        cancelToken: source.token
+        timeout: 2000
       })
       .then(response => {
         logger.info('[+] The movie exists with the given ID with service.');
@@ -87,19 +75,13 @@ exports.getMoviesRemoteWithToken = (url, token) => {
   logger.info(`[+] Movies to retrieve from ${url}`);
   const authToken = `${config.AUTH_TOKEN}${token}`;
   return new Promise(function(resolve, reject) {
-    let source = CancelToken.source();
-    setTimeout(() => {
-      source.cancel();
-    }, 300);
-    axios
-      .get(url, {
+    axios.get(url, {
         headers: {
           Authorization: authToken,
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*'
         },
-        timeout: 2000,
-        cancelToken: source.token
+        timeout: 2000
       })
       .then(response => {
         logger.info('[+] The movies retrieved from the service.');
