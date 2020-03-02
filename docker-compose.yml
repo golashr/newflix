@@ -30,7 +30,7 @@ services:
 
         cd /gosmartchain/smartcertwebapp/university
 
-        npm start  
+        node service.js  
           2>/logs/webjetserver/$${DATE}_log.txt
     restart: always
     networks:
@@ -57,7 +57,7 @@ services:
 
         cd /webjet/cinemaworld
 
-        npm start  
+        node service.js  
          2>/logs/cinemaworld/adminlogs.txt
     restart: always
     networks:
@@ -84,7 +84,7 @@ services:
 
         cd /webjet/filmworld
 
-        npm start
+        node service.js
          2>/logs/filmworld/$${DATE}_log.txt
     restart: always
     networks:
