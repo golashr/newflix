@@ -7,10 +7,10 @@ module.exports = {
   mongodb: {
     host: process.env.MONGO_HOST || 'localhost',
     port: process.env.MONGO_PORT || '27017',
-    dbName: 'webjetserver',
+    dbName: process.env.MONGO_DB || 'webjetserver',
     collectionName: 'webjetserver'
   },
-  cinemaworldBaseURL: 'http://localhost:3002',
-  filmworldBaseURL: 'http://localhost:3003',
+  cinemaworldBaseURL: `${process.env.CINEMAWORLD_HOST}:${process.env.CINEMAWORLD_PORT}`,
+  filmworldBaseURL: `${process.env.FILMWORLD_HOST}:${process.env.FILMWORLD_PORT}`,
   AUTH_TOKEN: 'Bearer '
 };

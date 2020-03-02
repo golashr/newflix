@@ -32,6 +32,15 @@ services:
 
         node service.js  
           2>/logs/webjetserver/$${DATE}_log.txt
+    environment:
+      - PORT=3001
+      - MONGO_HOST=172.21.240.17
+      - MONGO_PORT=27017
+      - MONGO_DB=webjetserver
+      - CINEMAWORLD_HOST=172.22.240.12
+      - CINEMAWORLD_PORT=3002
+      - FILMWORLD_HOST=172.22.240.13
+      - FILMWORLD_PORT=3003
     restart: always
     networks:
       webjet_net:
@@ -59,6 +68,11 @@ services:
 
         node service.js  
          2>/logs/cinemaworld/adminlogs.txt
+    environment:
+      - PORT=3002
+      - MONGO_HOST=172.21.240.17
+      - MONGO_PORT=27017
+      - MONGO_DB=cinemaworld
     restart: always
     networks:
       webjet_net:
@@ -86,6 +100,11 @@ services:
 
         node service.js
          2>/logs/filmworld/$${DATE}_log.txt
+    environment:
+      - PORT=3003
+      - MONGO_HOST=172.21.240.17
+      - MONGO_PORT=27017
+      - MONGO_DB=filmworld
     restart: always
     networks:
       webjet_net:
