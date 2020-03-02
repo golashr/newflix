@@ -16,13 +16,13 @@ router.get('/ping', (request, response) => {
   return successResponse(response, '<h1>Pong from filmWorld Service!</h1>');
 });
 
-/** @description Router POST call with '/api/login' endpoint.
+/** @description Router GET call with '/api/login' endpoint.
  * @param {request} request from the client app
  * @param {response} response object for the client app
  * @return {response object}
  */
 
-router.post('/login', (request, response) => {
+router.get('/login', (request, response) => {
   logger.info('[+] In the login');
   const user = {
     id: 1,

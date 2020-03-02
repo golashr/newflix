@@ -16,7 +16,7 @@ exports.getLoginToken = url => {
       source.cancel();
     }, 300);
     axios
-      .post(url, {
+      .get(url, {
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*'
