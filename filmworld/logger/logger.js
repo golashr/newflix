@@ -27,11 +27,11 @@ const logger = createLogger({
     // eslint-disable-next-line no-inline-comments
     new transports.Console({ level: 'debug' }), // warnings and errors
     new transports.File({
-      filename: `${packageJson.name}_combined.log`,
+      filename: `./logs/${packageJson.name}/${packageJson.name}_combined.log`,
       level: 'debug'
     }),
     new transports.File({
-      filename: `${packageJson.name}_error.log`,
+      filename: `./logs/${packageJson.name}/${packageJson.name}_error.log`,
       level: 'error'
     })
   ]

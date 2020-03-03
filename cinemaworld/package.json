@@ -5,7 +5,7 @@
   "main": "service.js",
   "scripts": {
     "start": "nodemon service.js",
-    "start-server": "node service.js",
+    "start:production": "node service.js",
     "test": "mocha --recursive --exit",
     "lint": "eslint index.js test"
   },

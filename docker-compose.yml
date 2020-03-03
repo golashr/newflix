@@ -17,29 +17,26 @@ services:
     ports:
       - '3001:3001'
     volumes:
-      - './logs:/logs'
+      - './logs:/webjet/webjetserver/logs/webjetserver'
     entrypoint:
       - /bin/sh
       - '-c'
       - >-
         set -u
         set -e
-        mkdir -p /logs/webjetserver
+        mkdir -p ./logs/webjetserver
 
         DATE=`date '+%Y-%m-%d_%H-%M-%S'`
 
-        cd /gosmartchain/smartcertwebapp/university
+        cd /webjet/webjetserver
 
-        node service.js  
-          2>/logs/webjetserver/$${DATE}_log.txt
+        npm run start:production
     environment:
       - PORT=3001
-      - MONGO_HOST=172.21.240.17
-      - MONGO_PORT=27017
-      - MONGO_DB=webjetserver
-      - CINEMAWORLD_HOST=172.22.240.12
+      - NODE_ENV=production
+      - CINEMAWORLD_HOST=http://172.22.240.12
       - CINEMAWORLD_PORT=3002
-      - FILMWORLD_HOST=172.22.240.13
+      - FILMWORLD_HOST=http://172.22.240.13
       - FILMWORLD_PORT=3003
     restart: always
     networks:
@@ -51,7 +48,7 @@ services:
     ports:
       - '3002:3002'
     volumes:
-      - './logs:/logs'
+      - './logs:/webjet/cinemaworld/logs/cinemaworld'
     depends_on:
       - mongo
     entrypoint:
@@ -60,17 +57,17 @@ services:
       - >-
         set -u
         set -e
-        mkdir -p /logs/cinemaworld
+        mkdir -p ./logs/cinemaworld
 
         DATE=`date '+%Y-%m-%d_%H-%M-%S'`
 
         cd /webjet/cinemaworld
 
-        node service.js  
-         2>/logs/cinemaworld/adminlogs.txt
+        npm run start:production
     environment:
       - PORT=3002
-      - MONGO_HOST=172.21.240.17
+      - NODE_ENV=production
+      - MONGO_HOST=172.22.240.17
       - MONGO_PORT=27017
       - MONGO_DB=cinemaworld
     restart: always
@@ -83,7 +80,7 @@ services:
     ports:
       - '3003:3003'
     volumes:
-      - './logs:/logs'
+      - './logs:/webjet/filmworld/logs/filmworld'
     depends_on:
       - mongo
     entrypoint:
@@ -92,17 +89,17 @@ services:
       - >-
         set -u
         set -e
-        mkdir -p /logs/filmworld
+        mkdir -p ./logs/filmworld
 
         DATE=`date '+%Y-%m-%d_%H-%M-%S'`
 
         cd /webjet/filmworld
 
-        node service.js
-         2>/logs/filmworld/$${DATE}_log.txt
+        npm run start:production
     environment:
       - PORT=3003
-      - MONGO_HOST=172.21.240.17
+      - NODE_ENV=production
+      - MONGO_HOST=172.22.240.17
       - MONGO_PORT=27017
       - MONGO_DB=filmworld
     restart: always
