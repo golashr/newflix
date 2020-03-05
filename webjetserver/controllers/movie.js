@@ -11,7 +11,8 @@ const config = require('../config/config');
 exports.getLoginToken = url => {
   logger.info(`[+] Login token to retrieve from ${url}`);
   return new Promise(function(resolve, reject) {
-    axios.get(url, {
+    axios
+      .get(url, {
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*'
@@ -41,7 +42,8 @@ exports.getMovieRemoteWithToken = (url, token, ID) => {
   logger.info(`[+] Movie ID ${ID} to look from ${url}`);
   const authToken = `${config.AUTH_TOKEN}${token}`;
   return new Promise(function(resolve, reject) {
-    axios.get(url, {
+    axios
+      .get(url, {
         headers: {
           Authorization: authToken,
           'Content-Type': 'application/json',
@@ -75,7 +77,8 @@ exports.getMoviesRemoteWithToken = (url, token) => {
   logger.info(`[+] Movies to retrieve from ${url}`);
   const authToken = `${config.AUTH_TOKEN}${token}`;
   return new Promise(function(resolve, reject) {
-    axios.get(url, {
+    axios
+      .get(url, {
         headers: {
           Authorization: authToken,
           'Content-Type': 'application/json',
@@ -106,7 +109,7 @@ exports.getMovieRemote = (baseUrl, ID) => {
   logger.info(`[+] Movies to retrieve from ${baseUrl}`);
   return new Promise(function(resolve, reject) {
     exports.getLoginToken(`${baseUrl}/api/login`).then(token => {
-      logger.info('[+] The token retrieved with cinmeworld service.');
+      logger.info('[+] The token retrieved with webjet service.');
       exports
         .getMovieRemoteWithToken(`${baseUrl}/movie/movie`, token.data, ID)
         .then(movies => {

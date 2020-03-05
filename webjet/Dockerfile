@@ -10,7 +10,7 @@ RUN npm install
 RUN npm install react-scripts -g
 COPY . /usr/src/app
 RUN chmod 755 -R /usr/src/app/node_modules/.bin/webpack
-RUN npm run build
+RUN yarn build
 
 FROM nginx:1.13.12-alpine
 RUN apk --no-cache add curl  

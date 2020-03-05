@@ -1,5 +1,5 @@
-// const dotenv = require('dotenv');
-// const path = require('path');
+const dotenv = require('dotenv');
+const path = require('path');
 const logger = require('./logger/logger');
 const config = require('./config/config');
 
@@ -17,7 +17,5 @@ if (process.env.NODE_ENV === 'development') {
 
 const server = require('./index');
 server.listen(config.server.port, () => {
-  logger.info(
-    `[+] webjetserver server running on port ${config.server.port}`
-  );
+  logger.info(`[+] webjetserver server running on port ${config.server.port}`);
 });
