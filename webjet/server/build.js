@@ -13,8 +13,14 @@ const outputPath = resolve(process.cwd(), 'build');
 app.use(compression());
 app.use(publicPath, express.static(outputPath));
 
-app.get('*', (req, res) => {
-  res.sendFile(resolve(outputPath, 'index.html'));
+app.get('/', (req, res) => {
+  const url = `http://${req.hostname}:3000/home`;
+  console.log(chalk.chalkProcessing('Request redirected to /home'));
+  return res.redirect(301, url);
+});
+
+app.get('/home', (req, res) => {
+  return res.sendFile(resolve(outputPath, 'index.html'));
 });
 
 // Start your app.
@@ -26,8 +32,8 @@ app.listen('3000', async err => {
       chalk.chalkSuccess(
         `Webjet application started listening on \n` +
           `localhost: http://localhost:3000/home \n` +
-          `LAN: http://${ip.address()}:3000/home \n`,
-      ),
+          `LAN: http://${ip.address()}:3000/home \n`
+      )
     );
   }
 });
